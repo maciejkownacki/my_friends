@@ -261,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 5),
 
                   Text(allContacts[index]),
-                  Text('<____________>'),
+                  Text('<___________>'),
                   Text('0'),
 
 
