@@ -1,6 +1,6 @@
 # my_friends
 
-A new Flutter project.
+Nowe genialne social medium
 
 ## Getting Started
 
