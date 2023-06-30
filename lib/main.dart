@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:my_friends/view_contact_page.dart';
 import 'settings_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -22,6 +25,7 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+
 
 class AddContactPage extends StatefulWidget {
   @override
@@ -169,6 +173,29 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Map<String, dynamic>> friendContacts = [];
   List<Map<String, dynamic>> workContacts = [];
 
+  void loadContacts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    domContacts = jsonDecode(prefs.getString('domContacts') ?? '[]').cast<Map<String, dynamic>>();
+    friendContacts = jsonDecode(prefs.getString('friendContacts') ?? '[]').cast<Map<String, dynamic>>();
+    workContacts = jsonDecode(prefs.getString('workContacts') ?? '[]').cast<Map<String, dynamic>>();
+  }
+
+
+  void saveContacts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('domContacts', jsonEncode(domContacts));
+    prefs.setString('friendContacts', jsonEncode(friendContacts));
+    prefs.setString('workContacts', jsonEncode(workContacts));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadContacts();
+  }
+
+
+
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -192,12 +219,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   workContacts.add(newContact);
                   break;
               }
+              saveContacts(); // Zapisz kontakty po dodaniu nowego
             });
           }
         });
       }
     });
   }
+
 
   List<Map<String, dynamic>> getContactsByIndex(int index) {
     switch (index) {
