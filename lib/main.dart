@@ -10,9 +10,6 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacementNamed(context, '/home');
     });
 
-
-
-
     return Scaffold(
       body: Center(
         child: Image.asset(
@@ -44,9 +41,12 @@ class _AddContactPageState extends State<AddContactPage> {
   }
 
   void addContact() {
-    String fullName =
-        '${firstNameController.text} ${lastNameController.text} [$selectedRole]';
-    Navigator.pop(context, fullName);
+    Map<String, dynamic> contact = {
+      'firstName': firstNameController.text,
+      'lastName': lastNameController.text,
+      'role': selectedRole,
+    };
+    Navigator.pop(context, contact);
   }
 
   @override
@@ -82,7 +82,6 @@ class _AddContactPageState extends State<AddContactPage> {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    // Tutaj umieść zdjęcie
                     child: Center(
                       child: Text(
                         'Zdjęcie',
@@ -144,8 +143,6 @@ class _AddContactPageState extends State<AddContactPage> {
                 labelText: 'Opis',
                 border: OutlineInputBorder(),
               ),
-              // Możesz dostosować obsługę wartości tekstowej pola Opis
-              // np. przez użycie TextEditingController
             ),
             SizedBox(height: 16),
             ElevatedButton(
@@ -168,7 +165,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  List<String> allContacts = [];
+  List<Map<String, dynamic>> domContacts = [];
+  List<Map<String, dynamic>> friendContacts = [];
+  List<Map<String, dynamic>> workContacts = [];
 
   void _onNavBarItemTapped(int index) {
     setState(() {
@@ -182,7 +181,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ).then((newContact) {
           if (newContact != null) {
             setState(() {
-              allContacts.add(newContact);
+              switch (newContact['role']) {
+                case 'Dom':
+                  domContacts.add(newContact);
+                  break;
+                case 'Przyjaciel':
+                  friendContacts.add(newContact);
+                  break;
+                case 'Praca':
+                  workContacts.add(newContact);
+                  break;
+              }
             });
           }
         });
@@ -190,8 +199,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Map<String, dynamic>> getContactsByIndex(int index) {
+    switch (index) {
+      case 0:
+        return domContacts;
+      case 1:
+        return friendContacts;
+      case 3:
+        return workContacts;
+      case 4:
+        return domContacts + friendContacts + workContacts;
+      default:
+        return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> currentContacts = getContactsByIndex(_selectedIndex);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -224,61 +249,53 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: _selectedIndex == 4
+      body: (_selectedIndex == 0 || _selectedIndex == 1 || _selectedIndex == 3 || _selectedIndex == 4)
           ? GridView.extent(
         maxCrossAxisExtent: 200,
         childAspectRatio: 1,
         padding: EdgeInsets.all(15),
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
-        children: List.generate(allContacts.length, (index) {
+        children: List.generate(currentContacts.length, (index) {
           return InkWell(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ViewContactPage(
-                    firstName: '',
-                    lastName: '',
-                    role: '',
-                    description: ''
+                      firstName: currentContacts[index]['firstName'],
+                      lastName: currentContacts[index]['lastName'],
+                      role: currentContacts[index]['role'],
+                      description: ''
                   ),
                 ),
               );
             },
             child: Container(
               child: Column(
-
                 children: [
                   Image.asset(
                     'assets/images/contact_image.png',
                     height: 100,
                     width: 100,
                     fit: BoxFit.contain,
-
                   ),
-
                   SizedBox(height: 5),
-
-                  Text(allContacts[index]),
+                  Text('${currentContacts[index]['firstName']} ${currentContacts[index]['lastName']}'),
                   Text('<___________>'),
-                  Text('0'),
-
-
-
-
-
+                  Text(currentContacts[index]['role']),
                 ],
               ),
             ),
-
-
           );
         }),
       )
           : Center(
         child: Text('Placeholder for other pages'),
       ),
+
+
+
       bottomNavigationBar: BottomNavigationBar(
         elevation: 10,
         currentIndex: _selectedIndex,
