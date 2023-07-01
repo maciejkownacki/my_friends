@@ -5,12 +5,14 @@ class ViewContactPage extends StatefulWidget {
   final String lastName;
   final String role;
   final String description;
+  final int relationshipValue;
 
   ViewContactPage({
     required this.firstName,
     required this.lastName,
     required this.role,
     required this.description,
+    required this.relationshipValue,
   });
 
   @override
@@ -18,11 +20,13 @@ class ViewContactPage extends StatefulWidget {
 }
 
 class _ViewContactPageState extends State<ViewContactPage> {
-  int relationshipValue = 50;
+  int relationshipValue = 0;
 
   Color _getRelationshipColor() {
-    if (relationshipValue <= 0) {
+    if (relationshipValue <= -1) {
       return Colors.red;
+    } else if (relationshipValue == 0) {
+      return Colors.grey;
     } else {
       return Colors.green;
     }

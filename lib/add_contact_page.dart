@@ -7,13 +7,17 @@ class AddContactPage extends StatefulWidget {
 
 class _AddContactPageState extends State<AddContactPage> {
   String selectedRole = 'Dom';
+  int relationshipValue = 0;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
 
   @override
   void dispose() {
     firstNameController.dispose();
     lastNameController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -110,6 +114,7 @@ class _AddContactPageState extends State<AddContactPage> {
             ),
             SizedBox(height: 16),
             TextFormField(
+              controller: descriptionController,
               maxLines: 13,
               decoration: InputDecoration(
                 labelText: 'Opis',
@@ -121,8 +126,14 @@ class _AddContactPageState extends State<AddContactPage> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Tutaj dodaj logikę dla przycisku Zapisz
-                // np. zapisanie informacji kontaktu i przeniesienie do listy kontaktów
+                Map<String, dynamic> contact = {
+                  'firstName': firstNameController.text,
+                  'lastName': lastNameController.text,
+                  'role': selectedRole,
+                  'description': descriptionController.text,
+                  'relationshipValue': relationshipValue,
+                };
+                Navigator.pop(context, contact);
               },
               child: Text('Zapisz'),
             ),

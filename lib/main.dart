@@ -36,11 +36,14 @@ class _AddContactPageState extends State<AddContactPage> {
   String selectedRole = 'Dom';
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   void dispose() {
     firstNameController.dispose();
     lastNameController.dispose();
+    descriptionController.dispose();
+
     super.dispose();
   }
 
@@ -49,6 +52,8 @@ class _AddContactPageState extends State<AddContactPage> {
       'firstName': firstNameController.text,
       'lastName': lastNameController.text,
       'role': selectedRole,
+      'relationshipValue': 0,
+      'description': descriptionController.text,
     };
     Navigator.pop(context, contact);
   }
@@ -295,7 +300,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       firstName: currentContacts[index]['firstName'],
                       lastName: currentContacts[index]['lastName'],
                       role: currentContacts[index]['role'],
-                      description: ''
+                      description: currentContacts[index]['description'],
+                      relationshipValue: currentContacts[index]['relationshipValue'],
+
                   ),
                 ),
               );
@@ -311,7 +318,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 5),
                   Text('${currentContacts[index]['firstName']} ${currentContacts[index]['lastName']}'),
-                  Text('<___________>'),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0),  // Dodaj padding na górze
+                    child: Container(
+                      width: 120,  // Tu wprowadź preferowaną szerokość
+                      child: LinearProgressIndicator(
+                        value: (currentContacts[index]['relationshipValue'] + 100) / 200,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            currentContacts[index]['relationshipValue'] <= -1
+                                ? Colors.red
+                                : currentContacts[index]['relationshipValue'] == 0
+                                ? Colors.grey
+                                : Colors.green
+                        ),
+                        backgroundColor: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+
+
+
+                  Text(' ${currentContacts[index]['relationshipValue']}'),
+
                   Text(currentContacts[index]['role']),
                 ],
               ),
