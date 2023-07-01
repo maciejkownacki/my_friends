@@ -57,7 +57,6 @@ class _AddContactPageState extends State<AddContactPage> {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    // Tutaj umieść zdjęcie
                     child: Center(
                       child: Text(
                         'Zdjęcie',
@@ -120,8 +119,6 @@ class _AddContactPageState extends State<AddContactPage> {
                 labelText: 'Opis',
                 border: OutlineInputBorder(),
               ),
-              // Możesz dostosować obsługę wartości tekstowej pola Opis
-              // np. przez użycie TextEditingController
             ),
             SizedBox(height: 16),
             ElevatedButton(
