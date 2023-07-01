@@ -21,6 +21,11 @@ class ViewContactPage extends StatefulWidget {
 
 class _ViewContactPageState extends State<ViewContactPage> {
   int relationshipValue = 0;
+   @override
+  void initState() {
+    super.initState();
+    relationshipValue = widget.relationshipValue;
+  }
 
   Color _getRelationshipColor() {
     if (relationshipValue <= -1) {
