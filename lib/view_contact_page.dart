@@ -20,7 +20,7 @@ class ViewContactPage extends StatefulWidget {
 }
 
 class _ViewContactPageState extends State<ViewContactPage> {
-  int relationshipValue = 0;
+  late int relationshipValue;
    @override
   void initState() {
     super.initState();
@@ -64,7 +64,7 @@ class _ViewContactPageState extends State<ViewContactPage> {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, relationshipValue);
           },
         ),
         title: Text(
