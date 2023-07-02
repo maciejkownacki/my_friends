@@ -178,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Map<String, dynamic>> friendContacts = [];
   List<Map<String, dynamic>> workContacts = [];
 
-  void loadContacts() async {
+  Future<void> loadContacts() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     domContacts = jsonDecode(prefs.getString('domContacts') ?? '[]').cast<Map<String, dynamic>>();
     friendContacts = jsonDecode(prefs.getString('friendContacts') ?? '[]').cast<Map<String, dynamic>>();
@@ -196,9 +196,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    loadContacts();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      await loadContacts();
+      setState(() {});
+    });
   }
-
 
 
   void _onNavBarItemTapped(int index) {
