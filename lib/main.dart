@@ -292,21 +292,30 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisSpacing: 8,
         children: List.generate(currentContacts.length, (index) {
           return InkWell(
+
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ViewContactPage(
-                      firstName: currentContacts[index]['firstName'],
-                      lastName: currentContacts[index]['lastName'],
-                      role: currentContacts[index]['role'],
-                      description: currentContacts[index]['description'],
-                      relationshipValue: currentContacts[index]['relationshipValue'],
-
+                    firstName: currentContacts[index]['firstName'],
+                    lastName: currentContacts[index]['lastName'],
+                    role: currentContacts[index]['role'],
+                    description: currentContacts[index]['description'],
+                    relationshipValue: currentContacts[index]['relationshipValue'],
                   ),
                 ),
-              );
+              ).then((updatedValue) {
+                if (updatedValue != null) {
+                  setState(() {
+                    currentContacts[index]['relationshipValue'] = updatedValue;
+                    saveContacts();
+                  });
+                }
+              });
             },
+
+
             child: Container(
               child: Column(
                 children: [
