@@ -52,7 +52,7 @@ class _AddContactPageState extends State<AddContactPage> {
       'firstName': firstNameController.text,
       'lastName': lastNameController.text,
       'role': selectedRole,
-      'relationshipValue': 1,
+      'relationshipValue': 0,
       'description': descriptionController.text,
     };
     Navigator.pop(context, contact);
