@@ -147,12 +147,14 @@ class _AddContactPageState extends State<AddContactPage> {
             SizedBox(height: 16),
             TextFormField(
               maxLines: 13,
+              controller: descriptionController,
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 labelText: 'Opis',
                 border: OutlineInputBorder(),
               ),
             ),
+
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: addContact,
