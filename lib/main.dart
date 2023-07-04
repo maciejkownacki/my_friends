@@ -208,7 +208,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if (index == 2) {
+/* */      if (index == 2) {
+        _selectedIndex = 0;
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -228,7 +229,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   workContacts.add(newContact);
                   break;
               }
-              saveContacts(); // Zapisz kontakty po dodaniu nowego
+              saveContacts();
+              // Zapisz kontakty po dodaniu nowego
             });
           }
         });
