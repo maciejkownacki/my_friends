@@ -58,6 +58,7 @@ class _AddContactPageState extends State<AddContactPage> {
     Navigator.pop(context, contact);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,6 +188,46 @@ class _MyHomePageState extends State<MyHomePage> {
     workContacts = jsonDecode(prefs.getString('workContacts') ?? '[]').cast<Map<String, dynamic>>();
   }
 
+  void _contactRemover(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Remove Contact'),
+          content: Text('Are you sure you want to remove this contact?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Remove'),
+              onPressed: () {
+                setState(() {
+                  // Usuwanie kontaktu na podstawie indeksu
+                  switch (_selectedIndex) {
+                    case 0:
+                      domContacts.removeAt(index);
+                      break;
+                    case 1:
+                      friendContacts.removeAt(index);
+                      break;
+                    case 3:
+                      workContacts.removeAt(index);
+                      break;
+                  }
+                  saveContacts();
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void saveContacts() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -319,6 +360,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 }
               });
+            },
+            onLongPress: () {
+              _contactRemover(index); // Wywołanie metody _contactRemover
             },
 
 

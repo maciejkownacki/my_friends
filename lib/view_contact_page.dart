@@ -21,7 +21,8 @@ class ViewContactPage extends StatefulWidget {
 
 class _ViewContactPageState extends State<ViewContactPage> {
   late int relationshipValue;
-   @override
+
+  @override
   void initState() {
     super.initState();
     relationshipValue = widget.relationshipValue;
@@ -55,6 +56,33 @@ class _ViewContactPageState extends State<ViewContactPage> {
     });
   }
 
+  void _contactRemover() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Remove Contact'),
+          content: Text('Are you sure you want to remove this contact?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Remove'),
+              onPressed: () {
+                // Wywołaj kod usuwający kontakt
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +99,16 @@ class _ViewContactPageState extends State<ViewContactPage> {
           'VIEW CONTACT',
           style: TextStyle(color: Colors.black),
         ),
+        actions: [
+          IconButton(
+            padding: EdgeInsets.all(15),
+            icon: Icon(Icons.delete_forever_outlined),
+            color: Colors.red,
+            onPressed: () {
+              _contactRemover();
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -152,7 +190,6 @@ class _ViewContactPageState extends State<ViewContactPage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                   ),
-
                   onPressed: _increaseRelationship,
                   child: Text('Zwiększ'),
                 ),
