@@ -85,7 +85,12 @@ class _ViewContactPageState extends State<ViewContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Navigator.pop(context, relationshipValue);
+      return false; // Prevent the automatic pop of the route
+    },
+    child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -198,6 +203,6 @@ class _ViewContactPageState extends State<ViewContactPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
