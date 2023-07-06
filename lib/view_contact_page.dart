@@ -84,34 +84,42 @@ class _ViewContactPageState extends State<ViewContactPage> {
     });
   }
 
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                      leading: Icon(Icons.photo_library),
-                      title: Text('Dodaj z galerii'),
-                      onTap: () {
-                        pickImageFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  ListTile(
+  void _showPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Dodaj z galerii'),
+                  ),
+                  onTap: () {
+                    pickImageFromGallery();
+                    // Tutaj dodaj funkcję pickImageFromGallery
+                    Navigator.pop(context);
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(20.0)),
+                GestureDetector(
+                  child: ListTile(
                     leading: Icon(Icons.photo_camera),
                     title: Text('Dodaj z aparatu'),
-                    onTap: () {
-                      pickImageFromCamera();
-                      Navigator.of(context).pop();
-                    },
                   ),
-                ],
-              ),
+                  onTap: () {
+                    pickImageFromCamera();
+                    // Tutaj dodaj funkcję pickImageFromCamera
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
-          );
-        }
+          ),
+        );
+      },
     );
   }
 

@@ -48,6 +48,14 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 
+    <!-- Dodane uprawnienia -->
+    <key>NSCameraUsageDescription</key>
+	<string>Aplikacja potrzebuje dostępu do kamery do robienia zdjęć.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Aplikacja potrzebuje dostępu do galerii, aby wybierać zdjęcia.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Aplikacja potrzebuje dostępu do mikrofonu, jeśli planujesz nagrywać wideo.</string>
+
 	<!-- Dodane ikony aplikacji -->
 	<key>CFBundleIcons</key>
 	<dict>
