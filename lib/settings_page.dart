@@ -15,7 +15,7 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: Colors.white,
         title: Text('SETTINGS'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,6 +30,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.language),
               title: Text('Language'),
+              subtitle: Text('TODO:'),
+
               onTap: () {
                 // Do something when Language is tapped
               },
@@ -37,6 +39,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
+              subtitle: Text('TODO:'),
+
               onTap: () {
                 // Do something when Notifications is tapped
               },
@@ -44,6 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.brush),
               title: Text('Themes'),
+              subtitle: Text('TODO:'),
               onTap: () {
                 showDialog(
                   context: context,
@@ -95,6 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             Divider(),
+
             Text(
               'Account Settings',
               style: TextStyle(
@@ -102,20 +108,127 @@ class _SettingsPageState extends State<SettingsPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
+
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
+              subtitle: Text('TODO: (moze strona view page dla myself)'),
+
               onTap: () {
                 // Do something when Profile is tapped
               },
             ),
+
+
             ListTile(
               leading: Icon(Icons.lock),
               title: Text('Change Password'),
+              subtitle: Text('TODO:'),
+
               onTap: () {
                 // Do something when Change Password is tapped
               },
             ),
+
+            ListTile(
+              leading: Icon(Icons.adb),
+              title: Text('Ads settings'),
+              subtitle: Text('TODO:'),
+
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+
+
+
+
+            Divider(),
+            Text(
+              'Share',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+
+            ListTile(
+              leading: Icon(Icons.star_half),
+              title: Text('Rate app'),
+              subtitle: Text('TODO: Tap to rate app'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+
+            ListTile(
+              leading: Icon(Icons.share_rounded),
+              title: Text('Share app'),
+              subtitle: Text('TODO: Tap to share app'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+
+            ListTile(
+              leading: Icon(Icons.comment),
+              title: Text('Share feedback'),
+              subtitle: Text('TODO: Tap to share mail to developer'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+
+
+            Divider(),
+            Text(
+              'Information',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.help),
+              title: Text('Help & Support'),
+              subtitle: Text('TODO: on click send mail to developer or open FAQ page'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+
+
+            Divider(),
+            Text(
+              'About',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Developed by:'),
+              subtitle: Text('Maciej Kownacki'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text('Version'),
+              subtitle: Text('Wersja 0.0.7'),
+              onTap: () {
+
+              },
+            ),
+
+
+
+            //________________________________________
           ],
         ),
       ),
