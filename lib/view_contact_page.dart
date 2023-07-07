@@ -26,10 +26,31 @@ class _ViewContactPageState extends State<ViewContactPage> {
   File? _image;
   final picker = ImagePicker();
 
+  // Kontrolery
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController roleController;
+  late TextEditingController descriptionController;
+
   @override
   void initState() {
     super.initState();
     relationshipValue = widget.relationshipValue;
+
+    firstNameController = TextEditingController(text: widget.firstName);
+    lastNameController = TextEditingController(text: widget.lastName);
+    roleController = TextEditingController(text: widget.role);
+    descriptionController = TextEditingController(text: widget.description);
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    roleController.dispose();
+    descriptionController.dispose();
+
+    super.dispose();
   }
 
   Color _getRelationshipColor() {
@@ -99,7 +120,6 @@ class _ViewContactPageState extends State<ViewContactPage> {
                   ),
                   onTap: () {
                     pickImageFromGallery();
-                    // Tutaj dodaj funkcję pickImageFromGallery
                     Navigator.pop(context);
                   },
                 ),
@@ -111,7 +131,6 @@ class _ViewContactPageState extends State<ViewContactPage> {
                   ),
                   onTap: () {
                     pickImageFromCamera();
-                    // Tutaj dodaj funkcję pickImageFromCamera
                     Navigator.pop(context);
                   },
                 ),
@@ -225,17 +244,31 @@ class _ViewContactPageState extends State<ViewContactPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          '${widget.firstName} ${widget.lastName}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        TextFormField(
+                          controller: firstNameController,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: 'Imię',
+                            border: OutlineInputBorder(),
                           ),
                         ),
                         SizedBox(height: 12),
-                        Text(
-                          'Rola: ${widget.role}',
-                          style: TextStyle(fontSize: 16),
+                        TextFormField(
+                          controller: lastNameController,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: 'Nazwisko',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          controller: roleController,
+                          readOnly: true,  // Opcjonalne, jeżeli nie chcesz, aby użytkownik mógł edytować rolę
+                          decoration: InputDecoration(
+                            labelText: 'Rola',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ],
                     ),
@@ -250,8 +283,7 @@ class _ViewContactPageState extends State<ViewContactPage> {
               ),
               SizedBox(height: 16),
               TextFormField(
-                readOnly: true,
-                initialValue: widget.description,
+                controller: descriptionController,
                 maxLines: 12,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
