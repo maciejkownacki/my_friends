@@ -125,7 +125,6 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.lock),
               title: Text('Change Password'),
               subtitle: Text('TODO:'),
-
               onTap: () {
                 // Do something when Change Password is tapped
               },
@@ -135,7 +134,15 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.adb),
               title: Text('Ads settings'),
               subtitle: Text('TODO:'),
+              onTap: () {
+                // Do something when Change Password is tapped
+              },
+            ),
 
+            ListTile(
+              leading: Icon(Icons.delete_forever_sharp),
+              title: Text('Delete stored data'),
+              subtitle: Text('TODO:'),
               onTap: () {
                 // Do something when Change Password is tapped
               },
