@@ -220,8 +220,23 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.person),
               title: Text('Developed by:'),
               subtitle: Text('Maciej Kownacki'),
-              onTap: () {
-                // Do something when Change Password is tapped
+              onTap: () {},
+              onLongPress: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Center(child: Text('😉', textScaleFactor: 4, )),
+                    duration: const Duration(milliseconds: 2000),
+                    width: 130.0, // zwiększona szerokość SnackBar
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
+                    backgroundColor: Colors.white,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                    ),
+                  ),
+                );
               },
             ),
             ListTile(
