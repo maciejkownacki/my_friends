@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:open_share_plus/open.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
+
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -7,6 +11,13 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   ThemeMode _themeMode = ThemeMode.light;
+
+
+  void shareApp() {
+    final String appLink = 'https://duckduckgo.com/app-link'; // Zaktualizuj link do aplikacji
+
+    Share.share('Check out this amazing app: $appLink');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +186,8 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Share app'),
               subtitle: Text('TODO: Tap to share app'),
               onTap: () {
+                shareApp();
+
                 // Do something when Change Password is tapped
               },
             ),
@@ -182,30 +195,32 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.comment),
               title: Text('Share feedback'),
-              subtitle: Text('TODO: Tap to share mail to developer'),
+              subtitle: Text('Tap to share mail to developer'),
               onTap: () {
-                // Do something when Change Password is tapped
+                Open.mail(
+                    toAddress: "maciwek@gmail.com", subject: "FEEDBACK my_friends", body: "Hello, I writing to express my feedback about my_friends application.");
+
               },
             ),
 
 
+
             Divider(),
             Text(
-              'Information',
+              'Help',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             ListTile(
-              leading: Icon(Icons.help),
+              leading: Icon(Icons.contact_support),
               title: Text('Help & Support'),
-              subtitle: Text('TODO: on click send mail to developer or open FAQ page'),
+              subtitle: Text('Tap to look for frequently asked questions'),
               onTap: () {
-                // Do something when Change Password is tapped
+                Open.browser(url: "https://duckduckgo.com");
               },
             ),
-
 
             Divider(),
             Text(
