@@ -61,6 +61,8 @@ class _AddContactPageState extends State<AddContactPage> {
   }
 
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -246,6 +248,12 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {});
     });
   }
+  void deleteAllContacts() {
+    domContacts.clear();
+    friendContacts.clear();
+    workContacts.clear();
+    saveContacts();
+  }
 
 
   void _onNavBarItemTapped(int index) {
@@ -351,9 +359,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text('Data dodania (od najnowszej do najstarzszej)'),
                     onTap: () {
                       setState(() {
-                        domContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
-                        friendContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
-                        workContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+                        domContacts.sort((a, b) => (b['timestamp'] ?? 0).compareTo(a['timestamp'] ?? 0));
+                        friendContacts.sort((a, b) => (b['timestamp'] ?? 0).compareTo(a['timestamp'] ?? 0));
+                        workContacts.sort((a, b) => (b['timestamp'] ?? 0).compareTo(a['timestamp'] ?? 0));
                         saveContacts();
                       });
                       Navigator.pop(context);
@@ -363,14 +371,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text('Data dodania (od najstarszej do najnowszej)'),
                     onTap: () {
                       setState(() {
-                        domContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
-                        friendContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
-                        workContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        domContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
+                        friendContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
+                        workContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
                         saveContacts();
                       });
                       Navigator.pop(context);
                     }
                 ),
+
               ],
             ),
           );

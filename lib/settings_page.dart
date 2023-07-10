@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_share_plus/open.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -17,6 +17,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
     Share.share('Check out this amazing app: $appLink');
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 );
               },
             ),
-
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
@@ -195,12 +197,35 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.delete_forever_sharp),
               title: Text('Delete stored data'),
               subtitle: Text('TODO:'),
-              onTap: () {
-                // Do something when Change Password is tapped
+              onTap: () async {
+                final confirm = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Delete stored data?'),
+                      content: Text('This will delete all stored data. Are you sure you want to proceed?'),
+                      actions: [
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Delete'),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+                if (confirm) {
+               //  MyHomePageState().deleteAllContacts(); // W??????ywołanie metody deleteAllContacts
+                }
               },
             ),
-
-
 
 
             Divider(),
@@ -218,7 +243,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Rate app'),
               subtitle: Text('TODO: Tap to rate app'),
               onTap: () {
-                // Do something when Change Password is tapped
+                Open.browser(url: 'https://play.google.com/store/apps/details?id=<YOUR_APP_ID>');
               },
             ),
 
@@ -313,3 +338,4 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
+
