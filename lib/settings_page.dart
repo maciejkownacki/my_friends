@@ -7,6 +7,8 @@ import 'theme_manager.dart';
 import 'themes.dart';
 import 'package:provider/provider.dart';
 
+import 'view_contact_page.dart';
+
 
 
 class SettingsPage extends StatefulWidget {
@@ -190,12 +192,18 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              subtitle: Text('TODO: (moze strona view page dla myself)'),
-
+              subtitle: Text('Tap to view profile'),
               onTap: () {
-                // Do something when Profile is tapped
+                // Navigate to the view_contact_page.dart with editing enabled
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ViewContactPage(firstName: '', role: '', description: '', lastName: '', relationshipValue: 0,),  // Make sure to pass the correct parameters
+                  ),
+                );
               },
             ),
+
 
 
             ListTile(
