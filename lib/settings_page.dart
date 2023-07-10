@@ -3,6 +3,11 @@ import 'package:open_share_plus/open.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'theme_manager.dart';
+import 'themes.dart';
+import 'package:provider/provider.dart';
+
+
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -25,8 +30,11 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('SETTINGS'),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+        title: Text(
+            'SETTINGS',
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -113,21 +121,36 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: const Text('Light'),
                           onTap: () {
-                            setState(() {
-                              _themeMode = ThemeMode.light;
-                            });
+                            Provider.of<ThemeManager>(context, listen: false).setTheme(lightTheme);
+                            Provider.of<ThemeManager>(context, listen: false).saveThemeMode('light');
                             Navigator.of(context).pop();
                           },
                         ),
                         ListTile(
                           title: const Text('Dark'),
                           onTap: () {
-                            setState(() {
-                              _themeMode = ThemeMode.dark;
-                            });
+                            Provider.of<ThemeManager>(context, listen: false).setTheme(darkTheme);
+                            Provider.of<ThemeManager>(context, listen: false).saveThemeMode('dark');
                             Navigator.of(context).pop();
                           },
                         ),
+                        ListTile(
+                          title: const Text('OLED'),
+                          onTap: () {
+                            Provider.of<ThemeManager>(context, listen: false).setTheme(oledTheme);
+                            Provider.of<ThemeManager>(context, listen: false).saveThemeMode('oled');
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('Matrix'),
+                          onTap: () {
+                            Provider.of<ThemeManager>(context, listen: false).setTheme(matrixTheme);
+                            Provider.of<ThemeManager>(context, listen: false).saveThemeMode('matrix');
+                            Navigator.of(context).pop();
+                          },
+                        ),
+
                         ButtonBar(
                           children: <Widget>[
                             TextButton(

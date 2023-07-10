@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:my_friends/view_contact_page.dart';
+import 'package:provider/provider.dart';
 import 'settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'theme_manager.dart';
+import 'themes.dart';
+
 
 
 class SplashScreen extends StatelessWidget {
@@ -67,17 +71,17 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.onSurface,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         title: Text(
           'ADD NEW FRIEND',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
       body: SingleChildScrollView(
@@ -299,9 +303,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text('Domyślnie'),
                     onTap: () {
                       setState(() {
-                        domContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
-                        friendContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
-                        workContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        domContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
+                        friendContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
+                        workContacts.sort((a, b) => (a['timestamp'] ?? 0).compareTo(b['timestamp'] ?? 0));
                         saveContacts();
                       });
                       Navigator.pop(context);
@@ -408,7 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Map<String, dynamic>> currentContacts = getContactsByIndex(_selectedIndex);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Row(
           children: [
             Spacer(),
@@ -424,14 +428,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+
             IconButton(
               icon: Icon(Icons.sort_by_alpha),
+              color: Theme.of(context).colorScheme.onSurface,
               onPressed: () {
                 showSortMenu(context);  // Pokazuje menu sortowania
               },
             ),
             IconButton(
               icon: Icon(Icons.settings),
+              color: Theme.of(context).colorScheme.onSurface,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -505,7 +512,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ? Colors.grey
                                 : Colors.green
                         ),
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                       ),
                     ),
                   ),
@@ -531,8 +538,8 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 10,
         currentIndex: _selectedIndex,
         onTap: _onNavBarItemTapped,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.black,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+        selectedItemColor: Theme.of(context).colorScheme.onSurface,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -561,16 +568,22 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 void main() {
-  runApp(MaterialApp(
-    title: 'My App',
-    theme: ThemeData(
-      primarySwatch: Colors.lightBlue,
+  runApp(
+    ChangeNotifierProvider<ThemeManager>(
+      create: (_) => ThemeManager(lightTheme),
+      child: Consumer<ThemeManager>(
+        builder: (context, theme, child) {
+          return MaterialApp(
+            title: 'My App',
+            theme: theme.getTheme(),
+            home: SplashScreen(),
+            routes: {
+              '/home': (context) => MyHomePage(),
+              '/addContact': (context) => AddContactPage(),
+            },
+          );
+        },
+      ),
     ),
-    home: SplashScreen(), // Ekran powitalny jako strona główna
-    routes: {
-
-      '/home': (context) => MyHomePage(), // Strona główna
-      '/addContact': (context) => AddContactPage(),
-    },
-  ));
+  );
 }

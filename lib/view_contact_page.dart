@@ -178,17 +178,17 @@ class _ViewContactPageState extends State<ViewContactPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
             onPressed: () {
               Navigator.pop(context, relationshipValue);
             },
           ),
           title: Text(
             'VIEW CONTACT',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface,),
           ),
           actions: [
             IconButton(
@@ -279,7 +279,7 @@ class _ViewContactPageState extends State<ViewContactPage> {
               LinearProgressIndicator(
                 value: (relationshipValue + 100) / 200, // Przekształcenie wartości na zakres 0-1
                 valueColor: AlwaysStoppedAnimation<Color>(_getRelationshipColor()),
-                backgroundColor: Colors.grey[300],
+                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
               SizedBox(height: 16),
               TextFormField(
