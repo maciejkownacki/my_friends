@@ -12,7 +12,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   ThemeMode _themeMode = ThemeMode.light;
 
-
   void shareApp() {
     final String appLink = 'https://duckduckgo.com/app-link'; // Zaktualizuj link do aplikacji
 
@@ -42,11 +41,53 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: Icon(Icons.language),
               title: Text('Language'),
               subtitle: Text('TODO:'),
-
               onTap: () {
-                // Do something when Language is tapped
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SimpleDialog(
+                        title: const Text('Language'),
+                        children: <Widget>[
+                          ListTile(
+                              title: const Text('Polski'),
+                              onTap: () {
+                                // TODO: handle the Polish language selection
+                                Navigator.of(context).pop();
+                              }
+                          ),
+                          ListTile(
+                              title: const Text('Angielski'),
+                              onTap: () {
+                                // TODO: handle the English language selection
+                                Navigator.of(context).pop();
+                              }
+                          ),
+                          ButtonBar(
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text('CANCEL'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  // Update the language of your app
+                                  // You should have a callback to your main.dart file here
+                                  // Use a state management solution like Provider, Redux, etc.
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                );
               },
             ),
+
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
