@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddContactPage extends StatefulWidget {
   @override
@@ -12,6 +14,20 @@ class _AddContactPageState extends State<AddContactPage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
+  File? _image;
+  final picker = ImagePicker();
+
+  Future pickImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -48,20 +64,30 @@ class _AddContactPageState extends State<AddContactPage> {
               children: [
                 Expanded(
                   flex: 3,
-                  child: Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 2,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Zdjęcie',
-                        style: TextStyle(fontSize: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      pickImageFromGallery();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: _image == null
+                              ? AssetImage('assets/images/placeholder.png') as ImageProvider<Object>
+                              : FileImage(_image!) as ImageProvider<Object>,
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      child: _image == null
+                          ? Center(
+                        child: Text(
+                          'Zdjęcie',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                          : null,
                     ),
                   ),
                 ),
@@ -130,7 +156,7 @@ class _AddContactPageState extends State<AddContactPage> {
                   'description': descriptionController.text,
                   'relationshipValue': relationshipValue,
                   'timestamp': DateTime.now().millisecondsSinceEpoch,  // Dodajemy timestamp
-
+                  'imagePath': _image?.path,  // Dodajemy ścieżkę do zdjęcia
                 };
                 Navigator.pop(context, contact);
               },
