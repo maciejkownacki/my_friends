@@ -30,6 +30,7 @@ ThemeData oledTheme = ThemeData(
 ThemeData matrixTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.green[800],
+
 //  accentColor: Colors.greenAccent,
   scaffoldBackgroundColor: Colors.black,
   textTheme: TextTheme(
