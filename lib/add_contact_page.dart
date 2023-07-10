@@ -129,6 +129,8 @@ class _AddContactPageState extends State<AddContactPage> {
                   'role': selectedRole,
                   'description': descriptionController.text,
                   'relationshipValue': relationshipValue,
+                  'timestamp': DateTime.now().millisecondsSinceEpoch,  // Dodajemy timestamp
+
                 };
                 Navigator.pop(context, contact);
               },

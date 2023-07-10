@@ -54,6 +54,8 @@ class _AddContactPageState extends State<AddContactPage> {
       'role': selectedRole,
       'relationshipValue': 0,
       'description': descriptionController.text,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,  // Dodajemy timestamp
+
     };
     Navigator.pop(context, contact);
   }
@@ -278,6 +280,103 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
+  void showSortMenu(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    title: Text('Domyślnie'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        friendContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        workContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Alfabetycznie (od A do Z)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => a['firstName'].compareTo(b['firstName']));
+                        friendContacts.sort((a, b) => a['firstName'].compareTo(b['firstName']));
+                        workContacts.sort((a, b) => a['firstName'].compareTo(b['firstName']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Alfabetycznie (od Z do A)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => b['firstName'].compareTo(a['firstName']));
+                        friendContacts.sort((a, b) => b['firstName'].compareTo(a['firstName']));
+                        workContacts.sort((a, b) => b['firstName'].compareTo(a['firstName']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Numerycznie (od 0 do 100)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => a['relationshipValue'].compareTo(b['relationshipValue']));
+                        friendContacts.sort((a, b) => a['relationshipValue'].compareTo(b['relationshipValue']));
+                        workContacts.sort((a, b) => a['relationshipValue'].compareTo(b['relationshipValue']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Numerycznie (od 100 do 0)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => b['relationshipValue'].compareTo(a['relationshipValue']));
+                        friendContacts.sort((a, b) => b['relationshipValue'].compareTo(a['relationshipValue']));
+                        workContacts.sort((a, b) => b['relationshipValue'].compareTo(a['relationshipValue']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Data dodania (od najnowszej do najstarzszej)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+                        friendContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+                        workContacts.sort((a, b) => b['timestamp'].compareTo(a['timestamp']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    title: Text('Data dodania (od najstarszej do najnowszej)'),
+                    onTap: () {
+                      setState(() {
+                        domContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        friendContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        workContacts.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
+                        saveContacts();
+                      });
+                      Navigator.pop(context);
+                    }
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
 
 
   List<Map<String, dynamic>> getContactsByIndex(int index) {
@@ -305,16 +404,22 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Spacer(),
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Align(
                 alignment: Alignment.center,
                 child: Image.asset(
                   'assets/images/logo.png',
                   fit: BoxFit.contain,
                   height: 150,
-                  width: 300,
+                  width: 200,
                 ),
               ),
+            ),
+            IconButton(
+              icon: Icon(Icons.sort_by_alpha),
+              onPressed: () {
+                showSortMenu(context);  // Pokazuje menu sortowania
+              },
             ),
             IconButton(
               icon: Icon(Icons.settings),
