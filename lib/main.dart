@@ -9,6 +9,9 @@ import 'dart:convert';
 import 'theme_manager.dart';
 import 'themes.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_friends/ad_mob_service.dart';  // Import your AdMobService here
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 
 
 
@@ -274,6 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await loadContacts();
       setState(() {});

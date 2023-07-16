@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'theme_manager.dart';
 import 'themes.dart';
 import 'package:provider/provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:my_friends/ad_mob_service.dart';
 
 import 'view_contact_page.dart';
 

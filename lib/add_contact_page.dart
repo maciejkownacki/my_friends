@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:my_friends/ad_mob_service.dart';
+
 
 class AddContactPage extends StatefulWidget {
   @override
